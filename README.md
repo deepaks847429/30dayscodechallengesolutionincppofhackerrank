@@ -576,6 +576,112 @@ int main()
 	return 0;
     
 }
+	day 18
+	#include <iostream>
+#include <stack>
+#include <queue> 
+
+
+using namespace std;
+
+class Solution {
+    //Write your code here
+    std::stack<char> mystack;
+    std::queue<char> myqueue;
+    
+    public:
+        void pushCharacter(char ch){
+            mystack.push(ch);
+        }
+    
+        void enqueueCharacter(char ch){
+            myqueue.push(ch);
+        }
+    
+        char popCharacter(){
+            char top = mystack.top();
+            mystack.pop();
+            return top;
+        }
+    
+        char dequeueCharacter(){
+            char front = myqueue.front();
+            myqueue.pop();
+            return front;
+        }
+};
+
+int main() {
+    // read the string s.
+    string s;
+    getline(cin, s);
+    
+  	// create the Solution class object p.
+    Solution obj;
+    
+    // push/enqueue all the characters of string s to stack.
+    for (int i = 0; i < s.length(); i++) {
+        obj.pushCharacter(s[i]);
+        obj.enqueueCharacter(s[i]);
+    }
+    
+    bool isPalindrome = true;
+    
+    // pop the top character from stack.
+    // dequeue the first character from queue.
+    // compare both the characters.
+    for (int i = 0; i < s.length() / 2; i++) {
+        if (obj.popCharacter() != obj.dequeueCharacter()) {
+            isPalindrome = false;
+            
+            break;
+        }
+    }
+    
+    // finally print whether string s is palindrome or not.
+    if (isPalindrome) {
+        cout << "The word, " << s << ", is a palindrome.";
+    } else {
+        cout << "The word, " << s << ", is not a palindrome.";
+    }
+    
+    return 0;
+}
+	day 19
+	#include <iostream>
+#include <algorithm>
+#include <string>
+using namespace std;
+class AdvancedArithmetic{
+    public:
+        virtual int divisorSum(int n)=0;
+};
+class Calculator : public AdvancedArithmetic {
+  public:
+    virtual int divisorSum(int n) override {
+        int sum = 0;
+        if ( 1 == n ) { return 1; }
+        
+        // Identify the divisors
+        for (int lo = 1, hi = n ; lo < hi ; ++lo) {
+            if (n % lo) { continue; }
+            sum += lo;
+            hi = (n / lo);
+            if (hi <= lo) { break; }
+            sum += hi;
+        }
+        
+        return sum;
+    }
+};
+int main(){
+    int n;
+    cin >> n;
+    AdvancedArithmetic *myCalculator = new Calculator(); 
+    int sum = myCalculator->divisorSum(n);
+    cout << "I implemented: AdvancedArithmetic\n" << sum;
+    return 0;
+}
 
 
 
